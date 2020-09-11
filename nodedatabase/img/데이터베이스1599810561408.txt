@@ -1,0 +1,70 @@
+use user05;
+
+CREATE TABLE `member` (
+  `user_email` varchar(100) NOT NULL,
+  `user_password` varchar(100) NOT NULL,
+  `user_gender` varchar(6) ,
+  `user_name` varchar(100) NOT NULL,
+  `user_kg` float DEFAULT '0',
+  `user_birthday` date DEFAULT NULL,
+  `user_image` varchar(200) DEFAULT NULL,
+  `islogin` int(11) DEFAULT '0',
+  `isremove` int(11) DEFAULT '0',
+  `logindate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `regdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `isemail` int(11) DEFAULT '0',
+  PRIMARY KEY (`user_email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP table user;
+
+
+CREATE TABLE activity (
+  activity_num int NOT NULL  COMMENT '활동번호',
+  user_email varchar(100) NOT NULL COMMENT '유저이메일',
+  activity_subject varchar(100) NOT NULL COMMENT '활동제목',
+  activity_type varchar(15)  COMMENT '활동타입',
+  activity_start_date_local date  COMMENT '활동시작시간',
+  activity_elapsed_time date   COMMENT '활동경과시간',
+  activity_content text COMMENT '활동내용',
+  activity_distance float  COMMENT '활동거리',
+  activity_intensity int(2) DEFAULT 0 COMMENT '활동강도',
+  activity_image blob COMMENT '활동이미지',
+  activity_elev_gain int(11) DEFAULT 0 COMMENT '활동고도',
+  PRIMARY KEY (`activity_num`,`user_email`),
+  KEY FK_user_TO_activity (`user_email`),
+  CONSTRAINT FK_user_TO_activity FOREIGN KEY (`user_email`) REFERENCES member (`user_email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table coment()
+
+commit;
+
+select * from member;
+
+insert into activity (activity_num,user_email,activity_subject,activity_type,activity_content,activity_image ) values (6,'PncQZK8LD1Lf+/LlORX+haAqcb9DeZQjrPRnoJYr8Skuf9FVm8LIqfTClXYdPeYXz6ndcI67b8vyW8ATC9uvH/NZ7U8=','제목6','자전거','요즘 비가 너무 많이 온다.','grape.jpg');
+
+
+DROP table activity ;
+
+select * from activity;
+
+select *
+from member m ,activity a
+where m.user_email = a.user_email
+LIMIT 1,3;
+
+select count(*) from activity a join member m on a.user_email = m.user_email
+
+
+SELECT *
+FROM activity a 
+join member m
+on a.user_email = m.user_email
+where user_name like '%백%';
+
+select m.user_email,m.user_name,a.activity_subject,a.activity_type,a.activity_num,a.activity_start_date_local,a.activity_elapsed_time,a.activity_content,a.activity_distance,a.activity_intensity,a.activity_image,a.activity_elev_gain
+from activity a join member m on a.user_email = m.user_email where lower(user_name) like '%백%'
+
+select m.user_email,m.user_name,m.user_image,a.activity_subject,a.activity_type,a.activity_num,a.activity_start_date_local,a.activity_elapsed_time,a.activity_content,a.activity_distance,a.activity_intensity,a.activity_image,a.activity_elev_gain
+			from member m ,activity a;
